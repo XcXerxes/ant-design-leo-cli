@@ -1,6 +1,6 @@
 import * as React from 'react'
-import * as DocumentTitle from 'react-document-title'
-import { Switch, Route, Link } from 'react-router-dom'
+import DocumentTitle from 'react-document-title'
+import { Switch, Route } from 'react-router-dom'
 import { getRoutes } from '../utils'
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 }
 
 export default class UserLayout extends React.PureComponent<Props> {
-  render () {
+  public render () {
     const {routerData, match} = this.props
     return (
       <DocumentTitle title="首页">

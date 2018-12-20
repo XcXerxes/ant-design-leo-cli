@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 export default class Login extends React.PureComponent {
-  render () {
+  public render () {
     return (
       <div>
         hello login

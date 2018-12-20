@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Layout, Icon, message } from 'antd'
-import { getMenuData } from '../common/menu'
-import * as DocumentTitle from 'react-document-title'
+import { Layout } from 'antd'
+// import { getMenuData } from '../common/menu'
+import DocumentTitle from 'react-document-title'
 import { ContainerQuery } from 'react-container-query'
 
-const { Content, Header, Footer } = Layout
+const { Content, Header } = Layout
 
 const query = {
   'screen-xs': {
@@ -36,15 +36,15 @@ type Props = {
 }
 class BasicLayout extends React.PureComponent<Props> {
   public render() {
-    const {match, location} = this.props
+    // const {match, location} = this.props
     const layout = (
       <Layout>
         <Layout>
           <Header style={{ padding: 0 }}>
-
+            <p>header</p>
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
-
+            <p>body</p>
           </Content>
         </Layout>
       </Layout>
