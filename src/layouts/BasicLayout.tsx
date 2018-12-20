@@ -6,11 +6,6 @@ import { ContainerQuery } from 'react-container-query'
 
 const { Content, Header, Footer } = Layout
 
-type Props = {
-  match?: any;
-  location?: any;
-}
-
 const query = {
   'screen-xs': {
     maxWidth: 575
@@ -35,7 +30,10 @@ const query = {
     minWidth: 1600
   }
 }
-
+type Props = {
+  match?: any;
+  location?: any;
+}
 class BasicLayout extends React.PureComponent<Props> {
   public render() {
     const {match, location} = this.props
@@ -46,7 +44,7 @@ class BasicLayout extends React.PureComponent<Props> {
 
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
-            
+
           </Content>
         </Layout>
       </Layout>
