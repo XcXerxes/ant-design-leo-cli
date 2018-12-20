@@ -16,6 +16,7 @@
     "object-literal-sort-keys": false,
     "triple-equals": false,
     "jsx-no-lambda": false,
-    "no-console": [true, "error"]
+    "no-console": [true, "error"],
+    "no-debugger": false
   }
 }

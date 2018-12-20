@@ -2,15 +2,66 @@ import React, { PureComponent } from 'react'
 import { Layout, Menu, Icon } from 'antd'
 import {Link} from 'react-router-dom'
 import * as styles from  './SiderMenu.scss'
+import * as pathToRegexp from 'path-to-regexp'
+import { urlToList } from '../_utils/pathTools'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
 
+/**
+ * Recursively flatten the data
+ * [{path:string},{path:string}] => [path,path2]
+ * @param  menu
+ */
+export const getFlatMenuKeys = (menu:any) =>
+  menu.reduce((keys: any, item:any) => {
+    keys.push(item.path);
+    if (item.children) {
+      return keys.concat(getFlatMenuKeys(item.children));
+    }
+    return keys;
+  }, []);
+
+/**
+ * Find all matched menu keys based on paths
+ * @param  flatMenuKeys: [/abc, /abc/:id, /abc/:id/info]
+ * @param  paths: [/abc, /abc/11, /abc/11/info]
+ */
+export const getMenuMatchKeys = (flatMenuKeys:any, paths:any) =>{
+  console.log('flatMenuKeys===========', paths)
+  return paths.reduce(
+    (matchKeys:any, path:string) =>
+      matchKeys.concat(flatMenuKeys.filter((item:any) => pathToRegexp(item).test(path))),
+    []
+  )
+}
+
 type Props = {
   menusData?: any;
   location?: any;
+  onCollapse?: () => void;
+  collapsed: boolean;
 }
-export default class SideMenu extends PureComponent<Props> {
+type State = {
+  openKeys: Array<any>;
+}
+export default class SideMenu extends PureComponent<Props, State> {
+  private flatMenuKeys:any;
+  constructor(props: Props) {
+    super(props)
+    this.flatMenuKeys = getFlatMenuKeys(props.menusData)
+    console.log(this.flatMenuKeys)
+    this.state = {
+      openKeys: this.getDefaultCollapsedSubMenus(props)
+    }
+  }
+  public getDefaultCollapsedSubMenus = (props:Props) => {
+    const {
+      location: { pathname },
+    } = props || this.props
+    console.log('pathanme=========', pathname)
+    return getMenuMatchKeys(this.flatMenuKeys, urlToList(pathname));
+  }
   public getIcon = (icon:any) => {
     if (typeof icon === 'string') {
       if (icon.indexOf('http') === 0) {
@@ -105,15 +156,40 @@ export default class SideMenu extends PureComponent<Props> {
   public checkPremissionItem = (authority: string, ItemDOm: any) => {
     return ItemDOm 
   }
-  public render() {
+  public isMainMenu = (openKey:any) => {
     const { menusData } = this.props
-    console.log(styles)
+    return menusData.some((item:any) => openKey && (item.key === openKey || item.path === openKey))
+  }
+   // Get the currently selected menu
+   public getSelectedMenuKeys = () => {
+    const {
+      location: { pathname }
+    } = this.props
+    return getMenuMatchKeys(this.flatMenuKeys, urlToList(pathname))
+  };
+  public handleOpenChange = (openKeys:any) => {
+    const lastOpenKey = openKeys[openKeys.length - 1]
+    const moreThanOne = openKeys.filter((openKey: any) => this.isMainMenu(openKey)).length > 1
+    this.setState({
+      openKeys: moreThanOne ? [lastOpenKey] : [...openKeys]
+    })
+  }
+  public render() {
+    const { menusData, onCollapse, collapsed } = this.props
+    const { openKeys } = this.state
+    let selectedKeys = this.getSelectedMenuKeys()
+    if (!selectedKeys.length) {
+      selectedKeys = [openKeys[openKeys.length - 1]]
+    }
+    console.log('openKeys========', selectedKeys)
+    const menuProps = collapsed ? {} : { openKeys }
     return (
       <Sider
         trigger={null}
         collapsible={true}
         breakpoint="lg"
         width={256}
+        onCollapse={onCollapse}
         className={styles.container}
       >
         <div>
@@ -121,8 +197,11 @@ export default class SideMenu extends PureComponent<Props> {
         </div>
         <Menu
           key="Menu"
-          theme="dark"
           mode="inline"
+          theme="dark"
+          {...menuProps}
+          onOpenChange={this.handleOpenChange}
+          selectedKeys={selectedKeys}
           style={{ padding: '16px 0', width: '100%' }}
         >
           {this.getMenuItems(menusData)}
