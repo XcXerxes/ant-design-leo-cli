@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { Layout } from 'antd'
-// import { getMenuData } from '../common/menu'
+import { getMenuData } from '../common/menu'
 import DocumentTitle from 'react-document-title'
 import { ContainerQuery } from 'react-container-query'
+import SiderMenu from '../components/SiderMenu/SiderMenu'
+import * as classnames from 'classnames'
 
 const { Content, Header } = Layout
 
@@ -36,9 +38,13 @@ type Props = {
 }
 class BasicLayout extends React.PureComponent<Props> {
   public render() {
-    // const {match, location} = this.props
+    const {location} = this.props
     const layout = (
       <Layout>
+        <SiderMenu 
+          menusData={getMenuData()}
+          location={location}
+        />
         <Layout>
           <Header style={{ padding: 0 }}>
             <p>header</p>
@@ -52,7 +58,7 @@ class BasicLayout extends React.PureComponent<Props> {
     return (
       <DocumentTitle title="Ant-design">
         <ContainerQuery query={query} >
-          {params => <div>{layout}</div>}
+          {(params:any) => <div className={classnames(params)}>{layout}</div>}
         </ContainerQuery>
       </DocumentTitle>
     )

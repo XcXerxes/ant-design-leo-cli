@@ -145,8 +145,26 @@ const cssLoaderDev = {
   ],
 };
 
+const rawModuleCssLoaderDev = {
+  loader: 'typings-for-css-modules-loader',
+  options: {
+    modules: true,
+    namedExport: true
+  }
+}
+
+const cssModulesLoaderDev = {
+  test: /\.module\.css$/,
+  use: [
+    require.resolve('style-loader'),
+    rawModuleCssLoaderDev,
+    postcssLoader
+  ]
+}
+
 const cssLoaderProd = {
   test: /\.css$/,
+  exclude: /\.module\.css$/,
   loader: ExtractTextPlugin.extract(
     Object.assign(
       {
@@ -167,7 +185,7 @@ const scssLoaderDev = {
   test: /\.scss$/,
   use: [
     require.resolve('style-loader'),
-    rawCssLoaderDev,
+    rawModuleCssLoaderDev,
     precssLoader,
   ],
 };
@@ -187,6 +205,8 @@ const scssLoaderProd = {
     )
   )
 };
+
+// scss modules loader
 
 // less loader
 const lessLoaderDev = {
