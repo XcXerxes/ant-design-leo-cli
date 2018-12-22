@@ -7,6 +7,7 @@ import { ContainerQuery } from 'react-container-query'
 import SiderMenu from '../components/SiderMenu/SiderMenu'
 import * as classnames from 'classnames'
 import { getRoutes } from '../utils'
+import GlobalHeader from '../components/GlobalHeader'
 
 const { Content, Header } = Layout
 
@@ -41,14 +42,27 @@ type Props = {
   collapsed: boolean;
 }
 class BasicLayout extends React.PureComponent<Props> {
-  public handleMenuCollapse = () => {
-    console.log('..')
+  public state = {
+    collapsed: false
   }
-  public handleMenuClick = () => {
-    console.log('..')
+  public handleMenuCollapse = (collapsed:boolean) => {
+    this.setState({
+      collapsed
+    })
+  }
+  public handleMenuClick = (param:{key:string}) => {
+    const { key } = param
+    if (key === 'user') {
+      console.log(key)
+    } else if (key === 'setting') {
+      console.log(key)
+    } else if (key === 'logout') {
+      console.log(key)
+    }
   }
   public render() {
-    const {location, match, routerData, collapsed} = this.props
+    const {location, match, routerData} = this.props
+    const { collapsed } = this.state
     const layout = (
       <Layout>
         <SiderMenu 
@@ -59,7 +73,11 @@ class BasicLayout extends React.PureComponent<Props> {
         />
         <Layout>
           <Header style={{ padding: 0 }}>
-            <p>header</p>
+            <GlobalHeader 
+              collapsed={collapsed}
+              onCollapse={this.handleMenuCollapse}
+              onMenuClick={this.handleMenuClick}
+            />
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
             <Switch>

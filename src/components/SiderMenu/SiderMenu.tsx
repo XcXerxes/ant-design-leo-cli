@@ -39,7 +39,7 @@ export const getMenuMatchKeys = (flatMenuKeys:any, paths:any) =>{
 type Props = {
   menusData?: any;
   location?: any;
-  onCollapse?: () => void;
+  onCollapse?: (collapsed:boolean) => void;
   collapsed: boolean;
 }
 type State = {
@@ -187,6 +187,7 @@ export default class SideMenu extends PureComponent<Props, State> {
       <Sider
         trigger={null}
         collapsible={true}
+        collapsed={collapsed}
         breakpoint="lg"
         width={256}
         onCollapse={onCollapse}
