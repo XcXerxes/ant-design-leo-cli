@@ -1,10 +1,12 @@
 import * as React from 'react'
 import { Layout } from 'antd'
+import { Switch, Route} from 'react-router-dom'
 import { getMenuData } from '../common/menu'
 import DocumentTitle from 'react-document-title'
 import { ContainerQuery } from 'react-container-query'
 import SiderMenu from '../components/SiderMenu/SiderMenu'
 import * as classnames from 'classnames'
+import { getRoutes } from '../utils'
 
 const { Content, Header } = Layout
 
@@ -35,22 +37,42 @@ const query = {
 type Props = {
   match?: any;
   location?: any;
+  routerData?: any;
+  collapsed: boolean;
 }
 class BasicLayout extends React.PureComponent<Props> {
+  public handleMenuCollapse = () => {
+    console.log('..')
+  }
+  public handleMenuClick = () => {
+    console.log('..')
+  }
   public render() {
-    const {location} = this.props
+    const {location, match, routerData, collapsed} = this.props
     const layout = (
       <Layout>
         <SiderMenu 
           menusData={getMenuData()}
           location={location}
+          collapsed={collapsed}
+          onCollapse={this.handleMenuCollapse}
         />
         <Layout>
           <Header style={{ padding: 0 }}>
             <p>header</p>
           </Header>
           <Content style={{ margin: '24px 24px 0', height: '100%' }}>
-            <p>body</p>
+            <Switch>
+              {getRoutes(match.path, routerData).map((item: any) => (
+                <Route 
+                  key={item.key}
+                  path={item.path}
+                  component={item.component}
+                  exact={item.exact}
+                  authority={item.authority}
+                />
+              ))}
+            </Switch>
           </Content>
         </Layout>
       </Layout>

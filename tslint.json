@@ -17,6 +17,7 @@
     "triple-equals": false,
     "jsx-no-lambda": false,
     "no-console": [true, "error"],
-    "noEmitOnError": true
+    "noEmitOnError": true,
+    "no-debugger": false
   }
 }
