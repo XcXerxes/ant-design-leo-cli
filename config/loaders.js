@@ -148,19 +148,17 @@ const cssLoaderDev = {
 const rawModuleCssLoaderDev = {
   loader: 'typings-for-css-modules-loader',
   options: {
-    modules: true,
-    namedExport: true
+    modules: true
   }
 }
-
-const cssModulesLoaderDev = {
-  test: /\.module\.css$/,
-  use: [
-    require.resolve('style-loader'),
-    rawModuleCssLoaderDev,
-    postcssLoader
-  ]
-}
+const rawModuleCssLoaderProd = {
+  loader: require.resolve('typings-for-css-modules-loader'),
+  options: {
+    modules: true,
+    minimize: true,
+    sourceMap: shouldUseSourceMap,
+  },
+};
 
 const cssLoaderProd = {
   test: /\.css$/,
@@ -197,7 +195,7 @@ const scssLoaderProd = {
       {
         fallback: require.resolve('style-loader'),
         use: [
-          rawCssLoaderProd,
+          rawModuleCssLoaderProd,
           precssLoader,
         ],
       },

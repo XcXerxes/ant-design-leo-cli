@@ -13,11 +13,9 @@
     "interface-over-type-literal": false,
     "array-type": [true, "generic"],
     "ordered-imports": [false],
-    "object-literal-sort-keys": false,
     "triple-equals": false,
     "jsx-no-lambda": false,
-    "no-console": [true, "error"],
-    "noEmitOnError": true,
+    "no-console": false,
     "no-debugger": false
   }
 }

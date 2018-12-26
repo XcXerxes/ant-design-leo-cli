@@ -1,1 +1,5 @@
-export const container: string;
+export interface ISiderMenuScss {
+  'container': string;
+}
+
+export const locals: ISiderMenuScss;
