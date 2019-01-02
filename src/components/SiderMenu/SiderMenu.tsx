@@ -41,6 +41,7 @@ type Props = {
   location?: any;
   onCollapse?: (collapsed:boolean) => void;
   collapsed: boolean;
+  logo?: string;
 }
 type State = {
   openKeys: Array<any>;
@@ -50,7 +51,6 @@ export default class SideMenu extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props)
     this.flatMenuKeys = getFlatMenuKeys(props.menusData)
-    console.log(this.flatMenuKeys)
     this.state = {
       openKeys: this.getDefaultCollapsedSubMenus(props)
     }
@@ -59,7 +59,6 @@ export default class SideMenu extends PureComponent<Props, State> {
     const {
       location: { pathname },
     } = props || this.props
-    console.log('pathanme=========', pathname)
     return getMenuMatchKeys(this.flatMenuKeys, urlToList(pathname));
   }
   public getIcon = (icon:any) => {
@@ -175,13 +174,12 @@ export default class SideMenu extends PureComponent<Props, State> {
     })
   }
   public render() {
-    const { menusData, onCollapse, collapsed } = this.props
+    const { menusData, onCollapse, collapsed, logo } = this.props
     const { openKeys } = this.state
     let selectedKeys = this.getSelectedMenuKeys()
     if (!selectedKeys.length) {
       selectedKeys = [openKeys[openKeys.length - 1]]
     }
-    console.log('openKeys========', selectedKeys)
     const menuProps = collapsed ? {} : { openKeys }
     return (
       <Sider
@@ -193,9 +191,10 @@ export default class SideMenu extends PureComponent<Props, State> {
         onCollapse={onCollapse}
         className={styles.container}
       >
-        <div>
-          <p>logo</p>
-        </div>
+        <a className={styles.logoContent}>
+          <img src={logo} alt=""/>
+          {!collapsed && <h3>Ant Design</h3>}
+        </a>
         <Menu
           key="Menu"
           mode="inline"

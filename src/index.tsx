@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import App from './router'
 import './mock'
-import './index.css';
-import registerServiceWorker from './registerServiceWorker';
+import './index.css'
+import registerServiceWorker from './registerServiceWorker'
 
 ReactDOM.render(
   <App />,

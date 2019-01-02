@@ -10,7 +10,7 @@ const userList = {
 }
 
 export default {
-  signin(data:any) {
+  signin(url:string, data:any) {
     const { username } = JSON.parse(data.body)
     return userList[username]
   }

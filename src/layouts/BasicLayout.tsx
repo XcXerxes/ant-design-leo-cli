@@ -8,6 +8,7 @@ import SiderMenu from '../components/SiderMenu/SiderMenu'
 import * as classnames from 'classnames'
 import { getRoutes } from '../utils'
 import GlobalHeader from '../components/GlobalHeader'
+import logo from '../assets/images/logo.svg'
 
 const { Content, Header } = Layout
 
@@ -70,6 +71,7 @@ class BasicLayout extends React.PureComponent<Props> {
           location={location}
           collapsed={collapsed}
           onCollapse={this.handleMenuCollapse}
+          logo={logo}
         />
         <Layout>
           <Header style={{ padding: 0 }}>

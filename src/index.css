@@ -3,10 +3,21 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+h1, h2, h3, h4, h5, h6, ul, li{
+  margin:0;
+  padding: 0;
+}
+ul,li {
+  list-style: none;
+}
 
 #root {
   height: 100%;
 }
 * {
   box-sizing: border-box;
+}
+
+a:hover {
+  text-decoration: none;
 }

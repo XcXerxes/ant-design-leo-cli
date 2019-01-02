@@ -17,7 +17,7 @@ class App extends React.Component {
         </p>
         <Rate character="6"/>
       </div>
-    );
+    )
   }
 }
 
