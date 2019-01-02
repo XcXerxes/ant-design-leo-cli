@@ -4,7 +4,7 @@
 .logoContent {
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 20px;
   background-color: #002140;
   height: 64px;
 }
@@ -15,5 +15,6 @@
   font-size: 20px;
   margin-left: 12px;
   color: #fff;
+  white-space: nowrap;
 }
 

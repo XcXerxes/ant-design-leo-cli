@@ -1,6 +1,2 @@
-export interface IUserScss {
-  'form': string;
-  'submit': string;
-}
-
-export const locals: IUserScss;
+export const form: string;
+export const submit: string;
