@@ -148,7 +148,9 @@ const cssLoaderDev = {
 const rawModuleCssLoaderDev = {
   loader: 'typings-for-css-modules-loader',
   options: {
-    modules: true
+    modules: true,
+    namedExport: true,
+    camelCase: true
   }
 }
 const rawModuleCssLoaderProd = {

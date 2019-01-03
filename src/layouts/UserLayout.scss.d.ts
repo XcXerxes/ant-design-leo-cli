@@ -1,6 +1,2 @@
-export interface IUserLayoutScss {
-  'container': string;
-  'logoLink': string;
-}
-
-export const locals: IUserLayoutScss;
+export const container: string;
+export const logoLink: string;
