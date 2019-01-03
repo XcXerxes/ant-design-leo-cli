@@ -150,7 +150,8 @@ const rawModuleCssLoaderDev = {
   options: {
     modules: true,
     namedExport: true,
-    camelCase: true
+    camelCase: true,
+    localIdentName: '[name]__[local]--[hash:base64:5]'
   }
 }
 const rawModuleCssLoaderProd = {
