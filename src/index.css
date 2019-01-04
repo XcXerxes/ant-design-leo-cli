@@ -22,7 +22,11 @@ ul,li {
 * {
   box-sizing: border-box;
 }
-
-a:hover {
+a {
+  text-decoration: none;
+}
+a:hover, 
+a:active
+{
   text-decoration: none;
 }

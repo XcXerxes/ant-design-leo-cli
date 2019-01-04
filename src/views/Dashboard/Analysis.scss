@@ -3,3 +3,30 @@
   white-space: nowrap;
   overflow: hidden;
 }
+
+.salesExtraWrap {
+  display: flex;
+  align-items: center;
+  padding-right: 24px;
+}
+
+.salesExtra {
+  padding-right: 24px;
+  a{
+    color: rgba(0,0,0,.65);
+    margin-left: 24px;
+    &.currentDate {
+      color: #1890ff;
+    }
+  }
+}
+.salesTabs {
+  :global {
+    .ant-tabs-extra-content {
+      line-height: 55px;
+    }
+    .ant-tabs-bar {
+      padding-left: 16px;
+    }
+  }
+}

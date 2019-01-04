@@ -5,7 +5,10 @@ import {
   Row,
   Col,
   Tooltip,
-  Icon
+  Icon,
+  Card,
+  Tabs,
+  DatePicker
 } from 'antd'
 import ChartCard from '../../components/Charts/ChartCard'
 import {
@@ -18,8 +21,11 @@ import {
 import Trend from '../../components/Trend'
 import { connect } from 'react-redux'
 import { fakeChart } from '../../redux/actions/charts'
+import { getTimeDistance } from '../../utils'
 
 const { Fragment } = React
+const { TabPane } = Tabs
+const { RangePicker } = DatePicker
 
 const Yuan = (props:any) => (
   <span dangerouslySetInnerHTML={{ __html: yuan(props.children)}} />
@@ -28,6 +34,7 @@ const Yuan = (props:any) => (
 type State = {
   loading1: boolean;
   percent: number;
+  rangePickerValue?:any;
 }
 type Props = {
   loading?: boolean;
@@ -37,9 +44,13 @@ type Props = {
 
 
 class Analysis extends React.PureComponent<Props, State> {
-  public state = {
-    loading1: false,
-    percent: 0
+  constructor(props:Props) {
+    super(props)
+    this.state = {
+      loading1: false,
+    percent: 0,
+    rangePickerValue: getTimeDistance('year')
+    }
   }
   public async componentDidMount() {
     try {
@@ -54,8 +65,29 @@ class Analysis extends React.PureComponent<Props, State> {
       throw error
     }
   }
+  public isActive = (type:string):any => {
+    const { rangePickerValue } = this.state
+    const value:any = getTimeDistance(type)
+    if (!rangePickerValue[0] || !rangePickerValue[1]) {
+      return
+    }
+    if (rangePickerValue[0].isSame(value[0], 'day') &&
+    rangePickerValue[1].isSame(value[1], 'day')) {
+      return styles.currentDate
+    }
+  }
+  public selecteDate = (type:string) => {
+    const value:any = getTimeDistance(type)
+    const { rangePickerValue } = this.state
+    if (!rangePickerValue[0].isSame(value[0], 'day') ||
+    !rangePickerValue[1].isSame(value[1], 'day')) {
+      this.setState({
+        rangePickerValue: value
+      }) 
+    }
+  }
   public render() {
-    const { percent } = this.state
+    const { percent, rangePickerValue } = this.state
     const topColResponsiveProps = {
       xs: 24,
       sm: 12,
@@ -64,10 +96,32 @@ class Analysis extends React.PureComponent<Props, State> {
       xl: 6,
       style: {marginBottom: 24}
     }
+
+    const salesExtraBarResponsProps = {
+
+    }
+    const salesExtraRankResponsProps = {
+      
+    }
     const { loading, charts } = this.props
     const {
       visitData
     } = charts
+
+    const salesExtra:any = (
+      <div className={styles.salesExtraWrap}>
+        <div className={styles.salesExtra}>
+          <a href="#" className={this.isActive('today')} onClick={() => this.selecteDate('today')} >今日</a>
+          <a href="#" className={this.isActive('week')} onClick={() => this.selecteDate('week')} >本周</a>
+          <a href="#" className={this.isActive('month')} onClick={() => this.selecteDate('month')} >本月</a>
+          <a href="#" className={this.isActive('year')} onClick={() => this.selecteDate('year')} >全年</a>
+        </div>
+        <RangePicker 
+          value={rangePickerValue}
+          style={{ width: 256 }}
+        />
+      </div>
+    )
     return (
       <Fragment>
         <Row gutter={24}>
@@ -154,7 +208,16 @@ class Analysis extends React.PureComponent<Props, State> {
             </ChartCard>
           </Col>
         </Row>
-        <div>analysis</div>
+        <Card loading={loading} bordered={false} bodyStyle={{ padding: 0 }} >
+          <Tabs tabBarExtraContent={salesExtra} size="large" className={styles.salesTabs}>
+            <TabPane tab="销售额" key="1">
+              1234
+            </TabPane>
+            <TabPane tab="访问量" key="2">
+              1234566
+            </TabPane>
+          </Tabs>
+        </Card>
       </Fragment>
     )
   }
