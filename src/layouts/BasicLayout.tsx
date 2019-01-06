@@ -81,7 +81,7 @@ class BasicLayout extends React.PureComponent<Props> {
               onMenuClick={this.handleMenuClick}
             />
           </Header>
-          <Content style={{ margin: '24px 24px 0', height: '100%' }}>
+          <Content style={{ margin: '24px 24px 24px', height: '100%' }}>
             <Switch>
               {getRoutes(match.path, routerData).map((item: any) => (
                 <Route 

@@ -3,6 +3,7 @@ import Field from './Field'
 import MiniArea from './MiniArea'
 import MiniBar from './MiniBar'
 import MiniPorgress from './MiniProgress'
+import Bar from './Bar'
 
 const yuan = (val:(string|number)) => `¥ ${numeral(val).format('0,0')}`
 
@@ -11,7 +12,8 @@ const Charts = {
   Field,
   MiniArea,
   MiniBar,
-  MiniPorgress
+  MiniPorgress,
+  Bar
 }
 export {
   Charts as default,
@@ -19,5 +21,6 @@ export {
   Field,
   MiniArea,
   MiniBar,
-  MiniPorgress
+  MiniPorgress,
+  Bar
 }
