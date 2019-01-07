@@ -97,6 +97,9 @@ export const getRouterData = ():RouterDataProp => {
     '/dashboard/monitor': {
       component: dynamicWrapper(() => import('../views/Dashboard/Monitor'))
     },
+    '/dashboard/workplace': {
+      component: dynamicWrapper(() => import('../views/Dashboard/Workplace'))
+    },
     '/user': {
       component: dynamicWrapper(() => import('../layouts/UserLayout'))
     },
