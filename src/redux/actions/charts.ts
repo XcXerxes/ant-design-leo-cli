@@ -1,5 +1,5 @@
 import * as types from '../actionTypes'
-import { fakeChartData } from '../../api/Charts'
+import { fakeChartData } from '../../api/Dashboard'
 
 export const fakeChart = () => async (dispatch:any) => {
   try {

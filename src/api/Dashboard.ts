@@ -5,3 +5,8 @@ export function fakeChartData () {
     method: 'get'
   })
 }
+export function fetchMonitorData () {
+  return Request('/dashboard/monitor/tags', {
+    method: 'get'
+  })
+}

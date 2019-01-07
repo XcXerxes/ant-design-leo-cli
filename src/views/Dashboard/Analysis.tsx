@@ -21,7 +21,8 @@ import {
   MiniArea,
   MiniBar,
   MiniPorgress,
-  Bar
+  Bar,
+  TimelineChart
 } from '../../components/Charts'
 import Trend from '../../components/Trend'
 import NumberInfo from '../../components/NumberInfo'
@@ -42,6 +43,7 @@ type State = {
   percent: number;
   rangePickerValue?:any;
   salesType: string;
+  currentTabKey?: string;
 }
 type Props = {
   loading?: boolean;
@@ -64,6 +66,7 @@ class Analysis extends React.PureComponent<Props, State> {
     this.state = {
       loading1: false,
       salesType: 'all',
+      currentTabKey: '',
       percent: 0,
       rangePickerValue: getTimeDistance('year')
     }
@@ -107,11 +110,21 @@ class Analysis extends React.PureComponent<Props, State> {
       salesType: e.target.value
     })
   }
-  public handleTabChange = (arg:any) => {
-    console.log(arg)
+  public handleTabChange = (key: string) => {
+    this.setState({
+      currentTabKey: key
+    })
   }
   public render() {
-    const { percent, rangePickerValue, salesType } = this.state
+    const { percent, rangePickerValue, salesType, currentTabKey } = this.state
+    const { loading, charts } = this.props
+    const {
+      visitData,
+      salesData,
+      searchData,
+      offlineData = [],
+      offlineChartData
+    } = charts
     const topColResponsiveProps = {
       xs: 24,
       sm: 12,
@@ -174,13 +187,17 @@ class Analysis extends React.PureComponent<Props, State> {
         )
       }
     ]
-    const CustomTab = ({data, currentTabKey}: any) =>(
+    const activeKey = currentTabKey || (offlineData[0] && offlineData[0].name)
+    console.log(currentTabKey)
+    const CustomTab = ({data, currentTabKey: currentKey}: any) =>(
       <Row gutter={8} style={{ width: 138, margin: '8px 0'}}>
         <Col span={12}>
           <NumberInfo 
             title={data.name}
             subTitle="转化率"
+            gap={2}
             total={`${data.cvr * 100}%`}
+            theme={currentKey !== data.name ? 'light' : 'dark'}
           />
         </Col>
       </Row>
@@ -197,12 +214,6 @@ class Analysis extends React.PureComponent<Props, State> {
         </Dropdown>
       </span>
     )
-    const { loading, charts } = this.props
-    const {
-      visitData,
-      salesData,
-      searchData
-    } = charts
 
     const salesExtra:any = (
       <div className={styles.salesExtraWrap}>
@@ -446,16 +457,18 @@ class Analysis extends React.PureComponent<Props, State> {
           bodyStyle={{ padding: '0 0 32px 0'}}
           style={{ marginTop: 32 }}
         >
-          <Tabs activeKey="1" onChange={this.handleTabChange}>
-            {offlineData.map((shop:any, index: number) => (
-              <TabPane tab={<CustomTab data={shop} currentTabKey="3" />} key={shop.name}>
-                <div style={{padding: '0 24px'}}>
-                  12345
+          <Tabs activeKey={activeKey} onChange={this.handleTabChange}>
+            {offlineData.map((shop: any) => (
+              <TabPane tab={<CustomTab data={shop} currentTabKey={activeKey} />} key={shop.name}>
+                <div style={{ padding: '0 24px'}}>
+                  <TimelineChart 
+                    data={offlineChartData}
+                    titleMap={{ y1: '客流量', y2: '支付笔数'}}
+                  />
                 </div>
               </TabPane>
             ))}
           </Tabs>
-          <span>213123</span>
         </Card>
       </Fragment>
     )

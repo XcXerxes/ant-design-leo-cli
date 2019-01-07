@@ -105,5 +105,12 @@
 }
 
 .offlineCard{
-  
+  :global {
+    .ant-tabs-ink-bar {
+      bottom: auto;
+    }
+    .ant-tabs-bar {
+      border-bottom: none;
+    }
+  }
 }

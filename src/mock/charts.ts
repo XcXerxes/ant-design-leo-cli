@@ -28,6 +28,22 @@ for (let i = 0; i < 50; i++) {
     range: Math.floor(Math.random() * 100),
     status: Math.floor((Math.random() * 10) % 2)
   })
+}
+
+const offlineData:any = []
+for (let i = 0; i < 10; i++) {
+  offlineData.push({
+    name: `门店 ${i}`,
+    cvr: Math.ceil(Math.random() * 9) / 10
+  })
+}
+const offlineChartData: any = []
+for (let i = 0; i < 20; i++) {
+  offlineChartData.push({
+    x: new Date().getTime() + 1000 * 60 * 60 * i,
+    y1: Math.floor(Math.random() * 100) + 10,
+    y2: Math.floor(Math.random() * 100) + 10
+  })
   
 }
 
@@ -36,7 +52,9 @@ export default {
     return {
       visitData,
       salesData,
-      searchData
+      searchData,
+      offlineData,
+      offlineChartData
     }
   }
 }
