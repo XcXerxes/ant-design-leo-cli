@@ -10,3 +10,8 @@ export function fetchMonitorData () {
     method: 'get'
   })
 }
+export function fetchWorkplaceData () {
+  return Request('/dashboard/workplace/activities', {
+    method: 'get'
+  })
+}

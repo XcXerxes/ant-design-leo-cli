@@ -15,7 +15,7 @@ const menuData = [
         path: 'monitor'
       },
       {
-        name: '工作台页',
+        name: '工作台',
         path: 'workplace'
         // hideInBreadcrumb: true,
         // hideInMenu: true,

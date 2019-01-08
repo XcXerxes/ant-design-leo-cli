@@ -20,5 +20,3 @@ export const fetchMonitor = () => async (dispatch:any) => {
     throw error
   }
 }
-
-// export const requestFakeChart

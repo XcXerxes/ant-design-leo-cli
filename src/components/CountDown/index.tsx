@@ -12,7 +12,7 @@ type State = {
 
 const fixedZero = (num: number) => num * 1 < 10 ? `0${num}` : num
 
-export default class CountDonw extends React.PureComponent<Props, State> {
+export default class CountDown extends React.PureComponent<Props, State> {
   public timer: any = 0
   public interval:number = 1000
   constructor(props:Props) {
@@ -25,6 +25,10 @@ export default class CountDonw extends React.PureComponent<Props, State> {
 
   public componentDidMount() {
     this.tick()
+  }
+  public componentWillUnmount() {
+    clearTimeout(this.timer)
+    this.timer = null
   }
 
   public initTime = (props: Props) => {

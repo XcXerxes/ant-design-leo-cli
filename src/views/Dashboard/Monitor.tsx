@@ -26,7 +26,6 @@ class Monitor extends React.PureComponent<Props> {
   public async componentDidMount () {
     try {
       await this.props.fetchMonitor()
-      debugger
     } catch (error) {
       throw error
     }

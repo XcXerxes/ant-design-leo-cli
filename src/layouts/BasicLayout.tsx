@@ -9,6 +9,7 @@ import * as classnames from 'classnames'
 import { getRoutes } from '../utils'
 import GlobalHeader from '../components/GlobalHeader'
 import logo from '../assets/images/logo.svg'
+import { BreadcrumbContext } from '../common/breadcrumbContext'
 
 const { Content, Header } = Layout
 
@@ -36,15 +37,49 @@ const query = {
     minWidth: 1600
   }
 }
+
+/**
+ * 获取面包屑配置
+ * @param {Object} menuData 菜单
+ * @param {Object} routerData 路由
+ */
+const getBreadcrumbNameMap = (menuData: any, routerData:any) => {
+  const result = {}
+  const childResult = {}
+  for (const i of menuData) {
+    if (!routerData[i.path]) {
+      result[i.path] = i
+    }
+    if (i.children) {
+      Object.assign(childResult, getBreadcrumbNameMap(i.children, routerData))
+    }
+  }
+  return Object.assign({}, routerData, result, childResult)
+}
+
 type Props = {
   match?: any;
   location?: any;
   routerData?: any;
   collapsed: boolean;
 }
-class BasicLayout extends React.PureComponent<Props> {
-  public state = {
-    collapsed: false
+type State = {
+  collapsed: boolean;
+  breadcrumbProps: any;
+}
+class BasicLayout extends React.PureComponent<Props, State> {
+  public constructor(props:Props) {
+    super(props)
+    this.state = {
+      collapsed: false,
+      breadcrumbProps: {
+        location: props.location,
+        breadcrumbNameMap: getBreadcrumbNameMap(getMenuData(), props.routerData)
+      }
+    }
+  }
+  public componentDidMount() {
+    getBreadcrumbNameMap(getMenuData(), this.props.routerData)
   }
   public handleMenuCollapse = (collapsed:boolean) => {
     this.setState({
@@ -98,11 +133,13 @@ class BasicLayout extends React.PureComponent<Props> {
       </Layout>
     )
     return (
-      <DocumentTitle title="Ant-design">
-        <ContainerQuery query={query} >
-          {(params:any) => <div className={classnames(params)}>{layout}</div>}
-        </ContainerQuery>
-      </DocumentTitle>
+      <BreadcrumbContext.Provider value={this.state.breadcrumbProps} >
+        <DocumentTitle title="Ant-design">
+          <ContainerQuery query={query} >
+            {(params:any) => <div className={classnames(params)}>{layout}</div>}
+          </ContainerQuery>
+        </DocumentTitle>
+      </BreadcrumbContext.Provider>
     )
   }
 }

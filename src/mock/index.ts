@@ -3,6 +3,7 @@ import * as FetchMock from 'fetch-mock'
 import User from './User'
 import Charts from './charts'
 import Monitor from './monitor'
+import Workplace from './workplace'
 
 
 // auth
@@ -17,6 +18,11 @@ FetchMock.mock(/\/dashboard\/fake_chart_data/, Charts.fakeChartData, {
 
 // monitor
 FetchMock.mock(/\/dashboard\/monitor\/tags/, Monitor.fetchMonitorData, {
+  method: 'get'
+})
+
+// Wrokplace
+FetchMock.mock(/\/dashboard\/workplace\/activities/, Workplace.fetchWorkplaceData, {
   method: 'get'
 })
 
