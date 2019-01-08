@@ -12,7 +12,8 @@ const menuData = [
       },
       {
         name: '监控页',
-        path: 'monitor'
+        path: 'monitor',
+        authority: 'admin'
       },
       {
         name: '工作台',

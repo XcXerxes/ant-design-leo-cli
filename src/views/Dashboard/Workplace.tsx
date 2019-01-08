@@ -191,6 +191,7 @@ class Workplace extends React.PureComponent<Props> {
               loading={loading}
               title="XX 指数"
               bordered={false}
+              bodyStyle={{ padding: 0 }}
               style={{ marginBottom: 24 }}
             >
               <EditableLinkGroup links={links} />
