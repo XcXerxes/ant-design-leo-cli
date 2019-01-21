@@ -13,7 +13,7 @@ const menuData = [
       {
         name: '监控页',
         path: 'monitor',
-        authority: 'admin'
+        authority: 'user'
       },
       {
         name: '工作台',
@@ -32,6 +32,25 @@ const menuData = [
         name: '基础表单',
         path: 'basic-form'
       }
+    ]
+  },
+  {
+    name: '异常页',
+    icon: 'warning',
+    path: 'exception',
+    children: [
+      {
+        name: '403',
+        path: '403'
+      },
+      {
+        name: '404',
+        path: '404'
+      },
+      {
+        name: '500',
+        path: '500'
+      },
     ]
   }
 ]

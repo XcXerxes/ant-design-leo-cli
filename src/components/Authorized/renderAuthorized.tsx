@@ -1,4 +1,4 @@
-let CURRENT:string|Function = 'NULL'
+let CURRENT:string|any = 'NULL'
 
 const renderAuthorize =(Authorized:any) => {
   return (currentAuthority:any) => {

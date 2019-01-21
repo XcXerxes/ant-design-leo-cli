@@ -42,6 +42,7 @@ type Props = {
   onCollapse?: (collapsed:boolean) => void;
   collapsed: boolean;
   logo?: string;
+  Authorized?: any;
 }
 type State = {
   openKeys: Array<any>;
@@ -153,6 +154,10 @@ export default class SideMenu extends PureComponent<Props, State> {
    * 返回带权限的 菜单
    */
   public checkPremissionItem = (authority: string, ItemDOm: any) => {
+    const { Authorized } = this.props
+    if (Authorized && Authorized.check) {
+      return Authorized.check(authority, ItemDOm)
+    }
     return ItemDOm 
   }
   public isMainMenu = (openKey:any) => {

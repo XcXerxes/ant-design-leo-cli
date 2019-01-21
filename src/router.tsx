@@ -3,6 +3,9 @@ import { Route, Switch, BrowserRouter as Router } from 'react-router-dom'
 import { getRouterData } from './common/router'
 import store from './redux/store'
 import { Provider } from 'react-redux'
+import Authorized from './utils/Authorized'
+
+const { AuthorizedRoute } = Authorized
 
 export default () => {
   const routerData = getRouterData()
@@ -13,9 +16,10 @@ export default () => {
       <Router>
         <Switch>
           <Route path="/user" component={UserLayout} />
-          <Route
-          path="/"
-          render={props => <BasicLayout {...props} />}
+          <AuthorizedRoute 
+            path="/"
+            render={(props: any) => <BasicLayout {...props} />}
+            authority={['admin', 'user']}
           />
         </Switch>
       </Router>

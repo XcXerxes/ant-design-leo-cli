@@ -8,7 +8,7 @@ import { CURRENT } from './renderAuthorized'
  * @param Exception {未通过的组件}
  */
 
-const checkPermissions = (authority:string | Array<any> | Function, currentAuthority:string|Function, target: React.ReactNode, Exception: React.ReactNode):any => {
+const checkPermissions = (authority:string | Array<any> | any, currentAuthority:string|any, target: React.ReactNode, Exception: React.ReactNode):any => {
   // 如果没有权限 查看所有
   if (!authority) {
     return target
@@ -44,7 +44,7 @@ const checkPermissions = (authority:string | Array<any> | Function, currentAutho
 }
 
 export { checkPermissions}
-const check = (authority:string | Array<any> | Function, target:React.ReactNode, Exception:React.ReactNode) => {
+const check = (authority:string | Array<any> | any, target:React.ReactNode, Exception:React.ReactNode) => {
   return checkPermissions(authority, CURRENT, target, Exception)
 }
 

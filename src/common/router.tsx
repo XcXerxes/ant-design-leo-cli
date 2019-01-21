@@ -95,7 +95,8 @@ export const getRouterData = ():RouterDataProp => {
       component: dynamicWrapper(() => import('../views/Dashboard/Analysis'))
     },
     '/dashboard/monitor': {
-      component: dynamicWrapper(() => import('../views/Dashboard/Monitor'))
+      component: dynamicWrapper(() => import('../views/Dashboard/Monitor')),
+      authority: 'user'
     },
     '/dashboard/workplace': {
       component: dynamicWrapper(() => import('../views/Dashboard/Workplace'))
@@ -105,7 +106,16 @@ export const getRouterData = ():RouterDataProp => {
     },
     '/user/login': {
       component: dynamicWrapper(() => import('../views/User/Login'))
-    }
+    },
+    '/exception/403': {
+      component: dynamicWrapper(() => import('../views/Exception/403'))
+    },
+    '/exception/404': {
+      component: dynamicWrapper(() => import('../views/Exception/404'))
+    },
+    '/exception/500': {
+      component: dynamicWrapper(() => import('../views/Exception/500'))
+    },
   }
 
   const menuData = getFlatMenuData(getMenuData())
@@ -115,7 +125,8 @@ export const getRouterData = ():RouterDataProp => {
   Object.keys(routerConfig).forEach(path => {
     // regular match item name
     // eg. router /user/:id === /user/chen
-    let menuKey = Object.keys(menuData).find(key => pathToRegexp(path).test(key))
+    const regPath = pathToRegexp(path)
+    let menuKey = Object.keys(menuData).find(key => regPath.test(key))
     const inherited = menuKey == null
     if (menuKey == null) {
       menuKey = findMenuKey(menuData, path)
@@ -135,5 +146,8 @@ export const getRouterData = ():RouterDataProp => {
     }
     routerData[path] = router
   })
+  console.log('=============')
+  console.log('=============', routerData)
+  console.log('=============')
   return routerData
 }

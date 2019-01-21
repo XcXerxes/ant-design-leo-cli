@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Layout } from 'antd'
-import { Switch, Route} from 'react-router-dom'
+import { Switch } from 'react-router-dom'
 import { getMenuData } from '../common/menu'
 import DocumentTitle from 'react-document-title'
 import { ContainerQuery } from 'react-container-query'
@@ -10,6 +10,9 @@ import { getRoutes } from '../utils'
 import GlobalHeader from '../components/GlobalHeader'
 import logo from '../assets/images/logo.svg'
 import { BreadcrumbContext } from '../common/breadcrumbContext'
+import Authorized from '../utils/Authorized'
+
+const { AuthorizedRoute } = Authorized
 
 const { Content, Header } = Layout
 
@@ -107,6 +110,7 @@ class BasicLayout extends React.PureComponent<Props, State> {
           collapsed={collapsed}
           onCollapse={this.handleMenuCollapse}
           logo={logo}
+          Authorized={Authorized}
         />
         <Layout>
           <Header style={{ padding: 0 }}>
@@ -119,7 +123,7 @@ class BasicLayout extends React.PureComponent<Props, State> {
           <Content style={{ margin: '24px 24px 24px', height: '100%' }}>
             <Switch>
               {getRoutes(match.path, routerData).map((item: any) => (
-                <Route 
+                <AuthorizedRoute 
                   key={item.key}
                   path={item.path}
                   component={item.component}

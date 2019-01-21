@@ -3,7 +3,7 @@ import CheckPermissions from './CheckPermissions'
 
 type Props = {
   children: React.ReactNode;
-  authority: string | Array<any> | Function;
+  authority: string | Array<any> | any;
   noMatch: any;
 }
 export default class Authorized extends React.PureComponent<Props> {
