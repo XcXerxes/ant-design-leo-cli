@@ -159,6 +159,8 @@ const rawModuleCssLoaderProd = {
   options: {
     modules: true,
     minimize: true,
+    camelCase: true,
+    namedExport: true,
     sourceMap: shouldUseSourceMap,
   },
 };

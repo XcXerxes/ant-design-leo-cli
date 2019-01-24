@@ -14,6 +14,7 @@ const getClientEnvironment = require('./env');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const loaders = require('./loaders');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -75,6 +76,9 @@ module.exports = {
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
   },
+  externals: {
+    antd: 'antd'
+  },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
@@ -103,7 +107,7 @@ module.exports = {
       '.jsx',
     ],
     alias: {
-      
+      '@ant-design/icons/lib/dist$': path.resolve(__dirname, './src/icons.js'),
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -220,6 +224,13 @@ module.exports = {
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: 6,
+      children: true,
+      deepChildren: true,
+      async: true
+    }),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
     }),
@@ -265,6 +276,7 @@ module.exports = {
       tsconfig: paths.appTsProdConfig,
       tslint: paths.appTsLint,
     }),
+    new BundleAnalyzerPlugin()
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

@@ -92,7 +92,8 @@
     "@types/redux-logger": "^3.0.6",
     "mockjs": "^1.0.1-beta3",
     "typescript": "^3.2.2",
-    "typings-for-css-modules-loader": "^1.7.0"
+    "typings-for-css-modules-loader": "^1.7.0",
+    "webpack-bundle-analyzer": "^3.0.3"
   },
   "jest": {
     "collectCoverageFrom": [
