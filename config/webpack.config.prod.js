@@ -59,7 +59,10 @@ module.exports = {
   // You can exclude the *.map files from the build during deployment.
   devtool: shouldUseSourceMap ? 'source-map' : false,
   // In production, we only want to load the polyfills and the app code.
-  entry: [require.resolve('./polyfills'), paths.appIndexJs],
+  entry: {
+    vendor: 'antd',
+    app: [require.resolve('./polyfills'), paths.appIndexJs]
+  },
   output: {
     // The build folder.
     path: paths.appBuild,
@@ -75,9 +78,6 @@ module.exports = {
       path
         .relative(paths.appSrc, info.absoluteResourcePath)
         .replace(/\\/g, '/'),
-  },
-  externals: {
-    antd: 'antd'
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -107,7 +107,7 @@ module.exports = {
       '.jsx',
     ],
     alias: {
-      '@ant-design/icons/lib/dist$': path.resolve(__dirname, './src/icons.js'),
+      '@ant-design/icons/lib/dist$': path.resolve(__dirname, '../src/icons.ts'),
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -226,10 +226,9 @@ module.exports = {
     // having to parse `index.html`.
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
-      minChunks: 6,
       children: true,
       deepChildren: true,
-      async: true
+      minChunks: 2
     }),
     new ManifestPlugin({
       fileName: 'asset-manifest.json',
